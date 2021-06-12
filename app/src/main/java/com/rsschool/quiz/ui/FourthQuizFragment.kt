@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.rsschool.quiz.databinding.FirstFragmentQuizBinding
 import com.rsschool.quiz.databinding.FourthFragmentQuizBinding
 
 class FourthQuizFragment : Fragment() {
@@ -82,9 +81,10 @@ class FourthQuizFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding  = null
         fragmentCommutator = null
+        super.onDestroyView()
+
     }
     companion object{
         const val INDEX = 4

@@ -2,13 +2,15 @@ package com.rsschool.quiz.ui
 
 import android.os.Bundle
 import android.text.TextUtils.replace
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.rsschool.quiz.R
 import com.rsschool.quiz.databinding.ActivityMainBinding
+import kotlin.system.exitProcess
 
-class MainActivity : AppCompatActivity(), FragmentCommutator {
+class MainActivity : AppCompatActivity(), FragmentCommutator{
 
     private val firstQuizFragment = FirstQuizFragment()
     private val secondQuizFragment= SecondQuizFragment()
@@ -20,8 +22,18 @@ class MainActivity : AppCompatActivity(), FragmentCommutator {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (intent.extras?.getInt("EXIT", 1) == 0 ){
+            finish()
+        }
+
+        Toast.makeText(this, "" + intent.extras?.getInt("EXIT"), Toast.LENGTH_LONG).show()
         fragmentTransaction.replace(R.id.container, firstQuizFragment).commit()
+
+
+
     }
+
 
     override fun hasNext(position: Int) {
         when (position) {
@@ -46,3 +58,4 @@ class MainActivity : AppCompatActivity(), FragmentCommutator {
         fragmentTransaction.replace(R.id.container, fragment).commit()
     }
 }
+

@@ -80,9 +80,10 @@ class ThirdQuizFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
         fragmentCommutator = null
+        super.onDestroyView()
+
     }
     companion object{
         const val INDEX = 3

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.databinding.FirstFragmentQuizBinding
@@ -60,13 +59,13 @@ class FirstQuizFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
-    private val callback = object : OnBackPressedCallback(true){
+    private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             fragmentCommutator?.hasPrevious(INDEX)
         }
     }
 
-    private fun chooseOption(number : Int){
+    private fun chooseOption(number: Int) {
         chosenOption = number
         isChosen = true
         binding.nextButton.isEnabled = true
@@ -78,9 +77,10 @@ class FirstQuizFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
         fragmentCommutator = null
+        super.onDestroyView()
+
     }
 
     companion object {

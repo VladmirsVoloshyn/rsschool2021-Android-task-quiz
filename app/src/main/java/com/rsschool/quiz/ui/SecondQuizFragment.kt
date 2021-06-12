@@ -29,15 +29,17 @@ class SecondQuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         binding.question.text = "second fragment"
         binding.nextButton.setOnClickListener {
             fragmentCommutator?.hasNext(INDEX)
         }
-
         binding.previousButton.setOnClickListener {
             fragmentCommutator?.hasPrevious(INDEX)
+        }
 
-            if (!isChosen){
+            if (!isChosen) {
                 binding.nextButton.isEnabled = false
             }
 
@@ -56,7 +58,7 @@ class SecondQuizFragment : Fragment() {
             binding.optionFive.setOnClickListener {
                 chooseOption(5)
             }
-        }
+
 
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
@@ -79,9 +81,10 @@ class SecondQuizFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
         fragmentCommutator = null
+        super.onDestroyView()
+
     }
 
     companion object {
