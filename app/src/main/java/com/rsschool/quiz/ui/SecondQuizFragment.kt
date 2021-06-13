@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.rsschool.quiz.data.Questions
 import com.rsschool.quiz.databinding.SecondFragmentQuizBinding
 
 class SecondQuizFragment : Fragment() {
@@ -29,35 +30,44 @@ class SecondQuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.toolbar.title = TITLE
 
+        binding.toolbar.setNavigationOnClickListener { fragmentCommutator?.hasPrevious(INDEX) }
 
-        binding.question.text = "second fragment"
         binding.nextButton.setOnClickListener {
-            fragmentCommutator?.hasNext(INDEX)
+            fragmentCommutator?.hasNext(INDEX, chosenOption)
         }
         binding.previousButton.setOnClickListener {
             fragmentCommutator?.hasPrevious(INDEX)
         }
 
-            if (!isChosen) {
-                binding.nextButton.isEnabled = false
-            }
+        if (!isChosen) {
+            binding.nextButton.isEnabled = false
+        }
 
-            binding.optionOne.setOnClickListener {
-                chooseOption(1)
-            }
-            binding.optionTwo.setOnClickListener {
-                chooseOption(2)
-            }
-            binding.optionThree.setOnClickListener {
-                chooseOption(3)
-            }
-            binding.optionFour.setOnClickListener {
-                chooseOption(4)
-            }
-            binding.optionFive.setOnClickListener {
-                chooseOption(5)
-            }
+        binding.optionOne.setOnClickListener {
+            chooseOption(1)
+        }
+        binding.optionTwo.setOnClickListener {
+            chooseOption(2)
+        }
+        binding.optionThree.setOnClickListener {
+            chooseOption(3)
+        }
+        binding.optionFour.setOnClickListener {
+            chooseOption(4)
+        }
+        binding.optionFive.setOnClickListener {
+            chooseOption(5)
+        }
+
+
+        binding.question.text = Questions.questions[1].question
+        binding.optionOne.text = Questions.questions[1].firstAnswer
+        binding.optionTwo.text = Questions.questions[1].secondAnswer
+        binding.optionThree.text = Questions.questions[1].thirdAnswer
+        binding.optionFour.text = Questions.questions[1].fourthAnswer
+        binding.optionFive.text = Questions.questions[1].fifthAnswer
 
 
         requireActivity().onBackPressedDispatcher.addCallback(callback)
@@ -89,5 +99,6 @@ class SecondQuizFragment : Fragment() {
 
     companion object {
         const val INDEX = 2
+        const val TITLE = "Question 2"
     }
 }

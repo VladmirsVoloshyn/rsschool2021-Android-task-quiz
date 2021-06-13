@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.rsschool.quiz.data.Questions
 import com.rsschool.quiz.databinding.FirstFragmentQuizBinding
 
 class FirstQuizFragment : Fragment() {
@@ -22,17 +23,19 @@ class FirstQuizFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         _binding = FirstFragmentQuizBinding.inflate(inflater, container, false)
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.question.text = "first fragment"
+        binding.toolbar.title = TITLE
 
         binding.nextButton.setOnClickListener {
-            fragmentCommutator?.hasNext(INDEX)
+            fragmentCommutator?.hasNext(INDEX, chosenOption)
         }
         binding.previousButton.isEnabled = false
 
@@ -57,6 +60,14 @@ class FirstQuizFragment : Fragment() {
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(callback)
+
+        binding.question.text = Questions.questions[0].question
+        binding.optionOne.text = Questions.questions[0].firstAnswer
+        binding.optionTwo.text = Questions.questions[0].secondAnswer
+        binding.optionThree.text = Questions.questions[0].thirdAnswer
+        binding.optionFour.text = Questions.questions[0].fourthAnswer
+        binding.optionFive.text = Questions.questions[0].fifthAnswer
+
     }
 
     private val callback = object : OnBackPressedCallback(true) {
@@ -85,5 +96,6 @@ class FirstQuizFragment : Fragment() {
 
     companion object {
         const val INDEX = 1
+        const val TITLE = "Question 1"
     }
 }

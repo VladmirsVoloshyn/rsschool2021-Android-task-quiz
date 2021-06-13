@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.rsschool.quiz.data.Questions
 import com.rsschool.quiz.databinding.FourthFragmentQuizBinding
 
 class FourthQuizFragment : Fragment() {
 
-    private var fragmentCommutator : FragmentCommutator? = null
+    private var fragmentCommutator: FragmentCommutator? = null
     private var _binding: FourthFragmentQuizBinding? = null
     private val binding get() = _binding!!
     private var chosenOption = 0
@@ -28,10 +29,17 @@ class FourthQuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.question.text = "fourth fragment"
+
+        binding.toolbar.title = TITLE
+
+        binding.toolbar.setNavigationOnClickListener {
+            fragmentCommutator?.hasPrevious(
+                INDEX
+            )
+        }
 
         binding.nextButton.setOnClickListener {
-            fragmentCommutator?.hasNext(INDEX)
+            fragmentCommutator?.hasNext(INDEX, chosenOption)
         }
 
         binding.previousButton.setOnClickListener {
@@ -58,11 +66,18 @@ class FourthQuizFragment : Fragment() {
             chooseOption(5)
         }
 
+        binding.question.text = Questions.questions[3].question
+        binding.optionOne.text = Questions.questions[3].firstAnswer
+        binding.optionTwo.text = Questions.questions[3].secondAnswer
+        binding.optionThree.text = Questions.questions[3].thirdAnswer
+        binding.optionFour.text = Questions.questions[3].fourthAnswer
+        binding.optionFive.text = Questions.questions[3].fifthAnswer
+
         requireActivity().onBackPressedDispatcher.addCallback(callback)
 
     }
 
-    private val callback = object : OnBackPressedCallback(true){
+    private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             fragmentCommutator?.hasPrevious(INDEX)
         }
@@ -74,19 +89,21 @@ class FourthQuizFragment : Fragment() {
 
     }
 
-    private fun chooseOption(number : Int){
+    private fun chooseOption(number: Int) {
         chosenOption = number
         isChosen = true
         binding.nextButton.isEnabled = true
     }
 
     override fun onDestroyView() {
-        _binding  = null
+        _binding = null
         fragmentCommutator = null
         super.onDestroyView()
 
     }
-    companion object{
+
+    companion object {
         const val INDEX = 4
+        const val TITLE = "Question 4"
     }
 }

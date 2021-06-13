@@ -8,11 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.rsschool.quiz.data.Questions
 import com.rsschool.quiz.databinding.FifthFragmentQuizBinding
 
 class FifthQuizFragment : Fragment() {
 
-    private  var fragmentCommutator : FragmentCommutator? = null
+    private var fragmentCommutator: FragmentCommutator? = null
     private var _binding: FifthFragmentQuizBinding? = null
     private val binding get() = _binding!!
     private var chosenOption = 0
@@ -29,12 +30,17 @@ class FifthQuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.question.text = "fifth fragment"
 
+        binding.toolbar.title = TITLE
+
+        binding.toolbar.setNavigationOnClickListener {
+            fragmentCommutator?.hasPrevious(
+                INDEX
+            )
+        }
 
         binding.submitButton.setOnClickListener {
-            val intent = Intent(activity, ResultActivity::class.java)
-            startActivity(intent)
+            fragmentCommutator?.hasSubmit(INDEX, chosenOption)
         }
 
         binding.previousButton.setOnClickListener {
@@ -61,17 +67,24 @@ class FifthQuizFragment : Fragment() {
             chooseOption(5)
         }
 
+        binding.question.text = Questions.questions[4].question
+        binding.optionOne.text = Questions.questions[4].firstAnswer
+        binding.optionTwo.text = Questions.questions[4].secondAnswer
+        binding.optionThree.text = Questions.questions[4].thirdAnswer
+        binding.optionFour.text = Questions.questions[4].fourthAnswer
+        binding.optionFive.text = Questions.questions[4].fifthAnswer
+
         requireActivity().onBackPressedDispatcher.addCallback(callback)
 
     }
 
-    private val callback = object : OnBackPressedCallback(true){
+    private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             fragmentCommutator?.hasPrevious(INDEX)
         }
     }
 
-    private fun chooseOption(number : Int){
+    private fun chooseOption(number: Int) {
         chosenOption = number
         isChosen = true
         binding.submitButton.isEnabled = true
@@ -83,13 +96,14 @@ class FifthQuizFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        _binding  = null
+        _binding = null
         fragmentCommutator = null
         super.onDestroyView()
 
     }
 
-    companion object{
+    companion object {
         const val INDEX = 5
+        const val TITLE = "Question 5"
     }
 }

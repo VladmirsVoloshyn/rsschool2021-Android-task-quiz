@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.rsschool.quiz.data.Questions
 import com.rsschool.quiz.databinding.ThirdFragmentQuizBinding
 
 class ThirdQuizFragment : Fragment() {
@@ -29,10 +30,13 @@ class ThirdQuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.question.text = "third fragment"
+
+        binding.toolbar.title = TITLE
+
+        binding.toolbar.setNavigationOnClickListener { fragmentCommutator?.hasPrevious(INDEX) }
 
         binding.nextButton.setOnClickListener {
-            fragmentCommutator?.hasNext(INDEX)
+            fragmentCommutator?.hasNext(INDEX, chosenOption)
         }
 
         binding.previousButton.setOnClickListener {
@@ -58,6 +62,13 @@ class ThirdQuizFragment : Fragment() {
         binding.optionFive.setOnClickListener {
             chooseOption(5)
         }
+
+        binding.question.text = Questions.questions[2].question
+        binding.optionOne.text = Questions.questions[2].firstAnswer
+        binding.optionTwo.text = Questions.questions[2].secondAnswer
+        binding.optionThree.text = Questions.questions[2].thirdAnswer
+        binding.optionFour.text = Questions.questions[2].fourthAnswer
+        binding.optionFive.text = Questions.questions[2].fifthAnswer
 
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
@@ -87,5 +98,6 @@ class ThirdQuizFragment : Fragment() {
     }
     companion object{
         const val INDEX = 3
+        const val TITLE = "Question 3"
     }
 }
