@@ -45,6 +45,18 @@ class ResultFragment : Fragment() {
         }
 
         binding.textView.text = answersController.toString()
+
+        binding.shareButton.setOnClickListener {
+            sendMail()
+        }
+    }
+
+    private fun sendMail(){
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Результат квиза от rsschool")
+        intent.putExtra(Intent.EXTRA_TEXT, answersController?.generateEmailText())
+        intent.type = "message/rfc822 "
+        startActivity(Intent.createChooser(intent, "выберите клиент"))
     }
 
     override fun onAttach(context: Context) {
@@ -63,7 +75,7 @@ class ResultFragment : Fragment() {
     companion object{
         @JvmStatic
         fun newInstance(answersController: AnswersController) : ResultFragment {
-            var fragment = ResultFragment()
+            val fragment = ResultFragment()
             val args = Bundle()
             args.putParcelable(PARCELABLE_TITLE, answersController)
             fragment.arguments = args
