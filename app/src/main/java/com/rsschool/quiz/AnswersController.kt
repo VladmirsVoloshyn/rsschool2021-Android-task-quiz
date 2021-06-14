@@ -41,7 +41,7 @@ class AnswersController() : Parcelable {
 
     fun generateEmailText(): String {
         return this.toString() + "\n\n" +
-        "1)" + Questions.questions[0].question + "\n" +
+                "1)" + Questions.questions[0].question + "\n" +
                 "Твой ответ: " +
                 when (repliesAnswers[0]) {
                     1 -> Questions.questions[0].firstAnswer
@@ -49,8 +49,8 @@ class AnswersController() : Parcelable {
                     3 -> Questions.questions[0].thirdAnswer
                     4 -> Questions.questions[0].fourthAnswer
                     else -> Questions.questions[0].fifthAnswer
-                }+ "\n\n" +
-                "1)" + Questions.questions[1].question + "\n" +
+                } + "\n\n" +
+                "2)" + Questions.questions[1].question + "\n" +
                 "Твой ответ: " +
                 when (repliesAnswers[1]) {
                     1 -> Questions.questions[1].firstAnswer
@@ -58,8 +58,8 @@ class AnswersController() : Parcelable {
                     3 -> Questions.questions[1].thirdAnswer
                     4 -> Questions.questions[1].fourthAnswer
                     else -> Questions.questions[1].fifthAnswer
-                }+ "\n\n" +
-                "1)" + Questions.questions[2].question + "\n" +
+                } + "\n\n" +
+                "3)" + Questions.questions[2].question + "\n" +
                 "Твой ответ: " +
                 when (repliesAnswers[2]) {
                     1 -> Questions.questions[2].firstAnswer
@@ -67,8 +67,8 @@ class AnswersController() : Parcelable {
                     3 -> Questions.questions[2].thirdAnswer
                     4 -> Questions.questions[2].fourthAnswer
                     else -> Questions.questions[2].fifthAnswer
-                }+ "\n\n" +
-                "1)" + Questions.questions[3].question + "\n" +
+                } + "\n\n" +
+                "4)" + Questions.questions[3].question + "\n" +
                 "Твой ответ: " +
                 when (repliesAnswers[3]) {
                     1 -> Questions.questions[3].firstAnswer
@@ -77,7 +77,7 @@ class AnswersController() : Parcelable {
                     4 -> Questions.questions[3].fourthAnswer
                     else -> Questions.questions[3].fifthAnswer
                 } + "\n\n" +
-                "1)" + Questions.questions[4].question + "\n" +
+                "5)" + Questions.questions[4].question + "\n" +
                 "Твой ответ: " +
                 when (repliesAnswers[4]) {
                     1 -> Questions.questions[4].firstAnswer

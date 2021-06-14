@@ -7,9 +7,12 @@ import androidx.fragment.app.FragmentTransaction
 import com.rsschool.quiz.AnswersController
 import com.rsschool.quiz.data.Questions
 import com.rsschool.quiz.R
+import com.rsschool.quiz.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), FragmentCommutator {
 
+
+    private lateinit var binding : ActivityMainBinding
     private val firstQuizFragment = FirstQuizFragment()
     private val secondQuizFragment = SecondQuizFragment()
     private val thirdQuizFragment = ThirdQuizFragment()
@@ -19,12 +22,14 @@ class MainActivity : AppCompatActivity(), FragmentCommutator {
     private var fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
     private val answersController = AnswersController()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
 
-        fragmentTransaction.replace(R.id.container, firstQuizFragment).commit()
+        fragmentTransaction.replace(binding.container.id, firstQuizFragment).commit()
 
         val arrayOfQuestion = resources.getStringArray(R.array.questions)
 
@@ -38,10 +43,11 @@ class MainActivity : AppCompatActivity(), FragmentCommutator {
 
         Questions.init(arrayOfQuestion, arrayListAnswers)
 
+
     }
 
 
-    override fun hasNext(index: Int, chosenOption : Int) {
+    override fun hasNext(index: Int, chosenOption: Int) {
         when (index) {
             1 -> fragmentTransaction(secondQuizFragment)
             2 -> fragmentTransaction(thirdQuizFragment)
@@ -49,6 +55,8 @@ class MainActivity : AppCompatActivity(), FragmentCommutator {
             4 -> fragmentTransaction(fifthQuizFragment)
         }
         answersController.registerAnswer(chosenOption, index)
+
+
     }
 
     override fun hasPrevious(index: Int) {
@@ -68,7 +76,7 @@ class MainActivity : AppCompatActivity(), FragmentCommutator {
 
     private fun fragmentTransaction(fragment: Fragment) {
         fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.container, fragment).commit()
+        fragmentTransaction.replace(binding.container.id, fragment).commit()
     }
 
 }

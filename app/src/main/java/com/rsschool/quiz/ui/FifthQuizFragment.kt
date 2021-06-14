@@ -6,8 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.rsschool.quiz.R
 import com.rsschool.quiz.data.Questions
 import com.rsschool.quiz.databinding.FifthFragmentQuizBinding
 
@@ -30,6 +32,8 @@ class FifthQuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        changeStatusBarColor(requireActivity(), STATUS_BAR_COLOR)
 
         binding.toolbar.title = TITLE
 
@@ -75,7 +79,6 @@ class FifthQuizFragment : Fragment() {
         binding.optionFive.text = Questions.questions[4].fifthAnswer
 
         requireActivity().onBackPressedDispatcher.addCallback(callback)
-
     }
 
     private val callback = object : OnBackPressedCallback(true) {
@@ -105,5 +108,6 @@ class FifthQuizFragment : Fragment() {
     companion object {
         const val INDEX = 5
         const val TITLE = "Question 5"
+        const val STATUS_BAR_COLOR = R.color.light_green_100_dark
     }
 }

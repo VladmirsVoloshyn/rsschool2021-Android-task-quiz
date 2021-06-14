@@ -1,20 +1,22 @@
 package com.rsschool.quiz.ui
 
 import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.rsschool.quiz.R
 import com.rsschool.quiz.data.Questions
 import com.rsschool.quiz.databinding.ThirdFragmentQuizBinding
 
 class ThirdQuizFragment : Fragment() {
 
-
-    private var fragmentCommutator : FragmentCommutator? = null
-    private var _binding : ThirdFragmentQuizBinding? = null
+    private var fragmentCommutator: FragmentCommutator? = null
+    private var _binding: ThirdFragmentQuizBinding? = null
     private val binding get() = _binding!!
     private var chosenOption = 0
     private var isChosen = false
@@ -30,6 +32,8 @@ class ThirdQuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        changeStatusBarColor(requireActivity(), STATUS_BAR_COLOR)
 
         binding.toolbar.title = TITLE
 
@@ -73,13 +77,13 @@ class ThirdQuizFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(callback)
     }
 
-    private val callback = object : OnBackPressedCallback(true){
+    private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             fragmentCommutator?.hasPrevious(INDEX)
         }
     }
 
-    private fun chooseOption(number : Int){
+    private fun chooseOption(number: Int) {
         chosenOption = number
         isChosen = true
         binding.nextButton.isEnabled = true
@@ -96,8 +100,10 @@ class ThirdQuizFragment : Fragment() {
         super.onDestroyView()
 
     }
-    companion object{
+
+    companion object {
         const val INDEX = 3
         const val TITLE = "Question 3"
+        const val STATUS_BAR_COLOR = R.color.cyan_100_dark
     }
 }

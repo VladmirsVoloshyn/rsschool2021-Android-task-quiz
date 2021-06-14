@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.rsschool.quiz.R
 import com.rsschool.quiz.data.Questions
 import com.rsschool.quiz.databinding.SecondFragmentQuizBinding
 
@@ -29,6 +31,8 @@ class SecondQuizFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        changeStatusBarColor(requireActivity(), STATUS_BAR_COLOR)
 
         binding.toolbar.title = TITLE
 
@@ -100,5 +104,6 @@ class SecondQuizFragment : Fragment() {
     companion object {
         const val INDEX = 2
         const val TITLE = "Question 2"
+        const val STATUS_BAR_COLOR = R.color.yellow_100_dark
     }
 }

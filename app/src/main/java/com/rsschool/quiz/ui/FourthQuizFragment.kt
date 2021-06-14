@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
+import com.rsschool.quiz.R
 import com.rsschool.quiz.data.Questions
 import com.rsschool.quiz.databinding.FourthFragmentQuizBinding
 
@@ -30,6 +33,8 @@ class FourthQuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        changeStatusBarColor(requireActivity(), STATUS_BAR_COLOR)
+
         binding.toolbar.title = TITLE
 
         binding.toolbar.setNavigationOnClickListener {
@@ -37,6 +42,7 @@ class FourthQuizFragment : Fragment() {
                 INDEX
             )
         }
+
 
         binding.nextButton.setOnClickListener {
             fragmentCommutator?.hasNext(INDEX, chosenOption)
@@ -105,5 +111,6 @@ class FourthQuizFragment : Fragment() {
     companion object {
         const val INDEX = 4
         const val TITLE = "Question 4"
+        const val STATUS_BAR_COLOR =  R.color.deep_purple_100
     }
 }
