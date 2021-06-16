@@ -13,7 +13,7 @@
         <item>Гавана</item>
         <item>Петриков</item>
         <item>Андорра-ла-Велла</item>
-        <item>Соединенные штаты Америки</item>
+        <item>Маркарт</item>
         <item>Олег</item>
     </array>
 
@@ -43,9 +43,19 @@
 
     <array name="fifth_question_answers">
         <item>Ангорский Хомяк</item>
-        <item>Чел, который доел последние пирожки</item>
+        <item>Чел, который украл твой сладкий рулет</item>
         <item>Копибара</item>
         <item>Мышь полевая</item>
         <item>Нет правильного варианта ответа</item>
     </array>
+
+    <array name="true_answers">
+        <item>3</item>
+        <item>4</item>
+        <item>1</item>
+        <item>5</item>
+        <item>3</item>
+    </array>
+
+    <string name="twenty_percents_comment">"Очень плохо, старайся лучше!"</string>
 </resources>

@@ -6,25 +6,28 @@ import com.rsschool.quiz.data.Questions
 
 class AnswersController() : Parcelable {
 
-    private val truthAnswers: Array<Int> = arrayOf(3, 4, 1, 5, 3)
+    private val trueAnswers: Array<Int> = Array(5) { 0 }
 
     private val repliesAnswers: Array<Int> = Array(5) { 0 }
 
-    constructor(parcel: Parcel) : this() {
+
+    fun getRepliesAnswer(index: Int): Int {
+        return repliesAnswers[index - 1]
     }
 
     private fun getResult(): Int {
         var result = 0
-        for (i in this.truthAnswers.indices) {
-            if (this.truthAnswers[i] == this.repliesAnswers[i]) {
+        for (i in this.trueAnswers.indices) {
+            if (this.trueAnswers[i] == this.repliesAnswers[i]) {
                 result += 20
             }
         }
         return result
     }
 
-    fun registerAnswer(numberOfAnswer: Int, index: Int) {
+    fun registerAnswer(numberOfAnswer: Int, index: Int, trueAnswer: Int) {
         repliesAnswers[index - 1] = numberOfAnswer
+        trueAnswers[index - 1] = trueAnswer
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -36,56 +39,33 @@ class AnswersController() : Parcelable {
     }
 
     override fun toString(): String {
-        return "Твой результат результат : \n ${getResult()}%"
+        return "Твой результат : \n ${getResult()}%" + "\n" + when (this.getResult()) {
+            0 -> ZERO_PERCENT_COMMENT
+            20 -> TWENTY_PERCENT_COMMENT
+            40 -> FOURTEEN_PERCENT_COMMENT
+            60 -> SIXTEEN_PERCENT_COMMENT
+            80 -> EIGHTY_PERCENT_COMMENT
+            else -> HUNDRED_PERCENT_COMMENT
+        }
     }
 
     fun generateEmailText(): String {
-        return this.toString() + "\n\n" +
-                "1)" + Questions.questions[0].question + "\n" +
-                "Твой ответ: " +
-                when (repliesAnswers[0]) {
-                    1 -> Questions.questions[0].firstAnswer
-                    2 -> Questions.questions[0].secondAnswer
-                    3 -> Questions.questions[0].thirdAnswer
-                    4 -> Questions.questions[0].fourthAnswer
-                    else -> Questions.questions[0].fifthAnswer
-                } + "\n\n" +
-                "2)" + Questions.questions[1].question + "\n" +
-                "Твой ответ: " +
-                when (repliesAnswers[1]) {
-                    1 -> Questions.questions[1].firstAnswer
-                    2 -> Questions.questions[1].secondAnswer
-                    3 -> Questions.questions[1].thirdAnswer
-                    4 -> Questions.questions[1].fourthAnswer
-                    else -> Questions.questions[1].fifthAnswer
-                } + "\n\n" +
-                "3)" + Questions.questions[2].question + "\n" +
-                "Твой ответ: " +
-                when (repliesAnswers[2]) {
-                    1 -> Questions.questions[2].firstAnswer
-                    2 -> Questions.questions[2].secondAnswer
-                    3 -> Questions.questions[2].thirdAnswer
-                    4 -> Questions.questions[2].fourthAnswer
-                    else -> Questions.questions[2].fifthAnswer
-                } + "\n\n" +
-                "4)" + Questions.questions[3].question + "\n" +
-                "Твой ответ: " +
-                when (repliesAnswers[3]) {
-                    1 -> Questions.questions[3].firstAnswer
-                    2 -> Questions.questions[3].secondAnswer
-                    3 -> Questions.questions[3].thirdAnswer
-                    4 -> Questions.questions[3].fourthAnswer
-                    else -> Questions.questions[3].fifthAnswer
-                } + "\n\n" +
-                "5)" + Questions.questions[4].question + "\n" +
-                "Твой ответ: " +
-                when (repliesAnswers[4]) {
-                    1 -> Questions.questions[4].firstAnswer
-                    2 -> Questions.questions[4].secondAnswer
-                    3 -> Questions.questions[4].thirdAnswer
-                    4 -> Questions.questions[4].fourthAnswer
-                    else -> Questions.questions[4].fifthAnswer
-                }
+
+        var resultEmailMessage = this.toString()
+
+        for (i in 1..5) {
+            resultEmailMessage += "\n" +
+                    i + ")" + Questions.questions[i - 1].question + "\n" +
+                    "Твой ответ: " +
+                    when (repliesAnswers[i - 1]) {
+                        1 -> Questions.questions[i - 1].firstAnswer
+                        2 -> Questions.questions[i - 1].secondAnswer
+                        3 -> Questions.questions[i - 1].thirdAnswer
+                        4 -> Questions.questions[i - 1].fourthAnswer
+                        else -> Questions.questions[i - 1].fifthAnswer
+                    } + "\n"
+        }
+        return resultEmailMessage
     }
 
     companion object CREATOR : Parcelable.Creator<AnswersController> {
@@ -96,5 +76,17 @@ class AnswersController() : Parcelable {
         override fun newArray(size: Int): Array<AnswersController?> {
             return arrayOfNulls(size)
         }
+
+        const val ZERO_PERCENT_COMMENT = "Очень плохо, старайся лучше!"
+        const val TWENTY_PERCENT_COMMENT = "Лучше, чем ничего..."
+        const val FOURTEEN_PERCENT_COMMENT =
+            "Ты, возможно, что-то да и знаешь о непонятных вопросах."
+        const val SIXTEEN_PERCENT_COMMENT = "Больше половины, не дурно!"
+        const val EIGHTY_PERCENT_COMMENT = "Да ты мозг, квиз поражен!"
+        const val HUNDRED_PERCENT_COMMENT = "exscelsior!!"
     }
+
+    constructor(parcel: Parcel) : this() {
+    }
+
 }

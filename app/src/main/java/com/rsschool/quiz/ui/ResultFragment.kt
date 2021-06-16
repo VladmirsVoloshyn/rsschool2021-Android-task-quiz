@@ -6,12 +6,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.AnswersController
-import com.rsschool.quiz.R
 import com.rsschool.quiz.databinding.FragmentResultBinding
-import kotlin.concurrent.fixedRateTimer
 import kotlin.system.exitProcess
 
 class ResultFragment : Fragment() {
@@ -26,7 +23,7 @@ class ResultFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentResultBinding.inflate(layoutInflater,container,false)
         return binding.root
     }
@@ -34,13 +31,11 @@ class ResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val window : Window = requireActivity().window
-        window.statusBarColor = resources.getColor(R.color.deep_orange_100_dark)
-
         answersController = arguments?.getParcelable(PARCELABLE_TITLE)
 
         binding.exitButton.setOnClickListener {
             activity?.finish()
+            exitProcess(0)
         }
 
         binding.backButton.setOnClickListener {
@@ -49,7 +44,7 @@ class ResultFragment : Fragment() {
             activity?.finish()
         }
 
-        binding.textView.text = answersController.toString()
+        binding.resultLabelTextView.text = answersController.toString()
 
         binding.shareButton.setOnClickListener {
             sendMail()
@@ -78,7 +73,6 @@ class ResultFragment : Fragment() {
     }
 
     companion object{
-        @JvmStatic
         fun newInstance(answersController: AnswersController) : ResultFragment {
             val fragment = ResultFragment()
             val args = Bundle()
