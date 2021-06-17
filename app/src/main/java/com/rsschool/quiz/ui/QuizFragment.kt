@@ -36,8 +36,6 @@ class QuizFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         currentIndex = arguments?.getInt(INDEX) ?: 1
         prevAnswer = arguments?.getInt(ANSWER) ?: 0
 
@@ -47,8 +45,8 @@ class QuizFragment : Fragment() {
 
         when (currentIndex) {
             1 -> {
-                binding.previousButton.isEnabled = false
-                binding.toolbar.navigationIcon = null
+                binding.previousButton.unable()
+                binding.toolbar.hideNavigation()
                 binding.nextButton.text = TEXT_BUTTON_NEXT
                 binding.nextButton.setOnClickListener {
                     fragmentCommutator?.hasNext(
@@ -93,20 +91,16 @@ class QuizFragment : Fragment() {
                 }
             }
         }
-
         binding.previousButton.setOnClickListener {
             fragmentCommutator?.hasPrevious(
                 currentIndex,
                 chosenOption,
                 question.trueAnswer
             )
-//            setPreviousOption()
         }
 
-
-
         if (!isChosen) {
-            binding.nextButton.isEnabled = false
+            binding.nextButton.unable()
         }
 
         binding.optionOne.setOnClickListener {
@@ -151,7 +145,7 @@ class QuizFragment : Fragment() {
     private fun chooseOption(number: Int) {
         chosenOption = number
         isChosen = true
-        binding.nextButton.isEnabled = true
+        binding.nextButton.enabled()
     }
 
     override fun onAttach(context: Context) {
@@ -163,37 +157,18 @@ class QuizFragment : Fragment() {
         _binding = null
         fragmentCommutator = null
         super.onDestroyView()
-
     }
 
     private fun setPreviousOption() {
         when (prevAnswer) {
-            1 -> {
-                binding.optionOne.isChecked = true
-                binding.nextButton.isEnabled = true
-                chosenOption = 1
-            }
-            2 -> {
-                binding.optionTwo.isChecked = true
-                binding.nextButton.isEnabled = true
-                chosenOption = 2
-            }
-            3 -> {
-                binding.optionThree.isChecked = true
-                binding.nextButton.isEnabled = true
-                chosenOption = 3
-            }
-            4 -> {
-                binding.optionFour.isChecked = true
-                binding.nextButton.isEnabled = true
-                chosenOption = 4
-            }
-            5 -> {
-                binding.optionFive.isChecked = true
-                binding.nextButton.isEnabled = true
-                chosenOption = 5
-            }
+            1 -> binding.optionOne.isChosen()
+            2 -> binding.optionTwo.isChosen()
+            3 -> binding.optionThree.isChosen()
+            4 -> binding.optionFour.isChosen()
+            5 -> binding.optionFive.isChosen()
         }
+        chosenOption = prevAnswer
+        binding.nextButton.enabled()
     }
 
     companion object {
