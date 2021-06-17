@@ -7,8 +7,8 @@ object QuestionsRepository {
 
     val questions: ArrayList<Question> = ArrayList()
 
-    fun getData(index: Int?): Question {
-        return questions[index?.minus(1)!!]
+    fun getData(index: Int): Question {
+        return questions[index.minus(1)]
     }
 
     fun init(context: Context) {

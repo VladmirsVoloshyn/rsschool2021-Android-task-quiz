@@ -19,8 +19,8 @@ class QuizFragment : Fragment() {
     private val binding get() = _binding!!
     private var chosenOption = 0
     private var isChosen = false
-    private var currentIndex: Int? = 1
-    private var prevAnswer: Int? = 0
+    private var currentIndex: Int = 1
+    private var prevAnswer: Int = 0
     private lateinit var question: Question
 
     override fun onCreateView(
@@ -38,8 +38,8 @@ class QuizFragment : Fragment() {
 
 
 
-        currentIndex = arguments?.getInt(INDEX)
-        prevAnswer = arguments?.getInt(ANSWER)
+        currentIndex = arguments?.getInt(INDEX) ?: 1
+        prevAnswer  = arguments?.getInt(ANSWER) ?: 0
 
         question = QuestionsRepository.getData(currentIndex)
 
@@ -51,66 +51,54 @@ class QuizFragment : Fragment() {
                 binding.toolbar.navigationIcon = null
                 binding.nextButton.text = TEXT_BUTTON_NEXT
                 binding.nextButton.setOnClickListener {
-                    currentIndex?.let { it1 ->
                         fragmentCommutator?.hasNext(
-                            it1,
+                            currentIndex,
                             chosenOption,
                             question.trueAnswer
                         )
-                    }
                 }
             }
             5 -> {
                 binding.nextButton.text = TEXT_BUTTON_SUBMIT
                 binding.toolbar.setNavigationOnClickListener {
-                    currentIndex?.let { it1 ->
                         fragmentCommutator?.hasPrevious(
-                            it1,
+                            currentIndex,
                             chosenOption,
-                            question.trueAnswer
-                        )
-                    }
+                            question.trueAnswer)
                 }
                 binding.nextButton.setOnClickListener {
                     fragmentCommutator?.hasSubmit(
-                        currentIndex!!,
+                        currentIndex,
                         chosenOption,
-                        QuestionsRepository.questions[currentIndex?.minus(1)!!].trueAnswer
+                        question.trueAnswer
                     )
                 }
             }
             else -> {
                 binding.nextButton.text = TEXT_BUTTON_NEXT
                 binding.toolbar.setNavigationOnClickListener {
-                    currentIndex?.let { it1 ->
-                        fragmentCommutator?.hasPrevious(
-                            it1,
-                            chosenOption,
-                            QuestionsRepository.questions[currentIndex?.minus(1)!!].trueAnswer
-                        )
-                    }
+                    fragmentCommutator?.hasPrevious(
+                        currentIndex,
+                        chosenOption,
+                        question.trueAnswer)
                 }
                 binding.nextButton.setOnClickListener {
-                    currentIndex?.let { it1 ->
-                        fragmentCommutator?.hasNext(
-                            it1,
-                            chosenOption,
-                            question.trueAnswer
-                        )
-                    }
+                    fragmentCommutator?.hasNext(
+                        currentIndex,
+                        chosenOption,
+                        question.trueAnswer
+                    )
                 }
             }
         }
 
         binding.previousButton.setOnClickListener {
-            currentIndex?.let { it1 ->
                 fragmentCommutator?.hasPrevious(
-                    it1,
+                    currentIndex,
                     chosenOption,
                     question.trueAnswer
                 )
-            }
-            setPreviousOption()
+//            setPreviousOption()
         }
 
 
