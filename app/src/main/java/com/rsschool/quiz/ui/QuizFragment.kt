@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.data.Question
-import com.rsschool.quiz.data.Questions
+import com.rsschool.quiz.data.QuestionsRepository
 import com.rsschool.quiz.databinding.FragmentQuizBinding
 
 
@@ -40,7 +40,7 @@ class QuizFragment : Fragment() {
         currentIndex = arguments?.getInt(INDEX)
         prevAnswer = arguments?.getInt(ANSWER)
 
-        question = Questions.questions[currentIndex?.minus(1)!!]
+        question = QuestionsRepository.getData(currentIndex)
 
         binding.toolbar.title = TITLE + currentIndex.toString()
 
@@ -74,7 +74,7 @@ class QuizFragment : Fragment() {
                     fragmentCommutator?.hasSubmit(
                         currentIndex!!,
                         chosenOption,
-                        Questions.questions[currentIndex?.minus(1)!!].trueAnswer
+                        QuestionsRepository.questions[currentIndex?.minus(1)!!].trueAnswer
                     )
                 }
             }
@@ -85,7 +85,7 @@ class QuizFragment : Fragment() {
                         fragmentCommutator?.hasPrevious(
                             it1,
                             chosenOption,
-                            Questions.questions[currentIndex?.minus(1)!!].trueAnswer
+                            QuestionsRepository.questions[currentIndex?.minus(1)!!].trueAnswer
                         )
                     }
                 }

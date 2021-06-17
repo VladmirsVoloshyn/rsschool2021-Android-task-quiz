@@ -2,7 +2,7 @@ package com.rsschool.quiz
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.rsschool.quiz.data.Questions
+import com.rsschool.quiz.data.QuestionsRepository
 
 class AnswersController() : Parcelable {
 
@@ -55,14 +55,14 @@ class AnswersController() : Parcelable {
 
         for (i in 1..5) {
             resultEmailMessage += "\n" +
-                    i + ")" + Questions.questions[i - 1].question + "\n" +
+                    i + ")" + QuestionsRepository.questions[i - 1].question + "\n" +
                     "Твой ответ: " +
                     when (repliesAnswers[i - 1]) {
-                        1 -> Questions.questions[i - 1].firstAnswer
-                        2 -> Questions.questions[i - 1].secondAnswer
-                        3 -> Questions.questions[i - 1].thirdAnswer
-                        4 -> Questions.questions[i - 1].fourthAnswer
-                        else -> Questions.questions[i - 1].fifthAnswer
+                        1 -> QuestionsRepository.questions[i - 1].firstAnswer
+                        2 -> QuestionsRepository.questions[i - 1].secondAnswer
+                        3 -> QuestionsRepository.questions[i - 1].thirdAnswer
+                        4 -> QuestionsRepository.questions[i - 1].fourthAnswer
+                        else -> QuestionsRepository.questions[i - 1].fifthAnswer
                     } + "\n"
         }
         return resultEmailMessage
@@ -86,7 +86,6 @@ class AnswersController() : Parcelable {
         const val HUNDRED_PERCENT_COMMENT = "exscelsior!!"
     }
 
-    constructor(parcel: Parcel) : this() {
-    }
+    constructor(parcel: Parcel) : this()
 
 }

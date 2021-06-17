@@ -1,17 +1,13 @@
 package com.rsschool.quiz.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.rsschool.quiz.AnswersController
-import com.rsschool.quiz.data.Questions
+import com.rsschool.quiz.data.QuestionsRepository
 import com.rsschool.quiz.R
 import com.rsschool.quiz.databinding.ActivityMainBinding
-import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity(), FragmentCommutator {
 
@@ -28,26 +24,11 @@ class MainActivity : AppCompatActivity(), FragmentCommutator {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val arrayOfQuestion = resources.getStringArray(R.array.questions)
-
-        val arrayListAnswers: ArrayList<Array<String>> = ArrayList()
-
-        val trueAnswers = resources.getIntArray(R.array.true_answers).toTypedArray()
-
-        arrayListAnswers.add(resources.getStringArray(R.array.first_question_answers))
-        arrayListAnswers.add(resources.getStringArray(R.array.second_question_answers))
-        arrayListAnswers.add(resources.getStringArray(R.array.third_question_answers))
-        arrayListAnswers.add(resources.getStringArray(R.array.fourth_question_answers))
-        arrayListAnswers.add(resources.getStringArray(R.array.fifth_question_answers))
-
-        Questions.init(arrayOfQuestion, arrayListAnswers, trueAnswers)
-
+        QuestionsRepository.init(this)
         setRandomTheme()
-
-        fragmentTransaction.replace(
-            binding.container.id,
+        fragmentTransaction(
             QuizFragment.newInstance(answersController.getRepliesAnswer(currentIndex), currentIndex)
-        ).commit()
+        )
     }
 
 
