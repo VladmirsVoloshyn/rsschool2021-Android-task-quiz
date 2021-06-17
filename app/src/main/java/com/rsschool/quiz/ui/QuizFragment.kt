@@ -37,6 +37,7 @@ class QuizFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+
         currentIndex = arguments?.getInt(INDEX)
         prevAnswer = arguments?.getInt(ANSWER)
 
