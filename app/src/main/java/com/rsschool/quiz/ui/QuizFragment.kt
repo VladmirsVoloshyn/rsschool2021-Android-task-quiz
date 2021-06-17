@@ -39,7 +39,7 @@ class QuizFragment : Fragment() {
 
 
         currentIndex = arguments?.getInt(INDEX) ?: 1
-        prevAnswer  = arguments?.getInt(ANSWER) ?: 0
+        prevAnswer = arguments?.getInt(ANSWER) ?: 0
 
         question = QuestionsRepository.getData(currentIndex)
 
@@ -51,20 +51,21 @@ class QuizFragment : Fragment() {
                 binding.toolbar.navigationIcon = null
                 binding.nextButton.text = TEXT_BUTTON_NEXT
                 binding.nextButton.setOnClickListener {
-                        fragmentCommutator?.hasNext(
-                            currentIndex,
-                            chosenOption,
-                            question.trueAnswer
-                        )
+                    fragmentCommutator?.hasNext(
+                        currentIndex,
+                        chosenOption,
+                        question.trueAnswer
+                    )
                 }
             }
             5 -> {
                 binding.nextButton.text = TEXT_BUTTON_SUBMIT
                 binding.toolbar.setNavigationOnClickListener {
-                        fragmentCommutator?.hasPrevious(
-                            currentIndex,
-                            chosenOption,
-                            question.trueAnswer)
+                    fragmentCommutator?.hasPrevious(
+                        currentIndex,
+                        chosenOption,
+                        question.trueAnswer
+                    )
                 }
                 binding.nextButton.setOnClickListener {
                     fragmentCommutator?.hasSubmit(
@@ -80,7 +81,8 @@ class QuizFragment : Fragment() {
                     fragmentCommutator?.hasPrevious(
                         currentIndex,
                         chosenOption,
-                        question.trueAnswer)
+                        question.trueAnswer
+                    )
                 }
                 binding.nextButton.setOnClickListener {
                     fragmentCommutator?.hasNext(
@@ -93,11 +95,11 @@ class QuizFragment : Fragment() {
         }
 
         binding.previousButton.setOnClickListener {
-                fragmentCommutator?.hasPrevious(
-                    currentIndex,
-                    chosenOption,
-                    question.trueAnswer
-                )
+            fragmentCommutator?.hasPrevious(
+                currentIndex,
+                chosenOption,
+                question.trueAnswer
+            )
 //            setPreviousOption()
         }
 
@@ -138,13 +140,11 @@ class QuizFragment : Fragment() {
     private val callback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             if (currentIndex != 1)
-                currentIndex?.let {
-                    fragmentCommutator?.hasPrevious(
-                        it,
-                        chosenOption,
-                        question.trueAnswer
-                    )
-                }
+                fragmentCommutator?.hasPrevious(
+                    currentIndex,
+                    chosenOption,
+                    question.trueAnswer
+                )
         }
     }
 
