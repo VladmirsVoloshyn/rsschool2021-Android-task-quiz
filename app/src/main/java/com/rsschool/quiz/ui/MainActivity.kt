@@ -9,7 +9,8 @@ import com.rsschool.quiz.data.QuestionsRepository
 import com.rsschool.quiz.R
 import com.rsschool.quiz.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), FragmentCommutator {
+class MainActivity : AppCompatActivity(), FragmentCommutator,
+    ExitDialogFragment.ExitDialogListener {
 
 
     private var currentIndex = 1
@@ -19,12 +20,13 @@ class MainActivity : AppCompatActivity(), FragmentCommutator {
     private val answersController = AnswersController()
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        QuestionsRepository.init(this)
+        QuestionsRepository.setData(this)
         setRandomTheme()
         fragmentTransaction(
             QuizFragment.newInstance(answersController.getRepliesAnswer(currentIndex), currentIndex)
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity(), FragmentCommutator {
 
     override fun hasNext(index: Int, chosenOption: Int, trueAnswer: Int) {
         currentIndex++
-        if (currentIndex in 1..5) {
+        if (currentIndex in indexRange) {
             fragmentTransaction(
                 QuizFragment.newInstance(
                     answersController.getRepliesAnswer(currentIndex),
@@ -48,7 +50,7 @@ class MainActivity : AppCompatActivity(), FragmentCommutator {
 
     override fun hasPrevious(index: Int, chosenOption: Int, trueAnswer: Int) {
         currentIndex--
-        if (currentIndex in 1..5) {
+        if (currentIndex in indexRange) {
             fragmentTransaction(
                 QuizFragment.newInstance(
                     answersController.getRepliesAnswer(currentIndex),
@@ -73,7 +75,7 @@ class MainActivity : AppCompatActivity(), FragmentCommutator {
     }
 
     private fun setRandomTheme() {
-        when ((1..5).random()) {
+        when ((indexRange).random()) {
             1 -> {
                 setTheme(R.style.Theme_Quiz_First)
                 changeStatusBarColor(this, (R.color.deep_orange_100_dark))
@@ -95,6 +97,14 @@ class MainActivity : AppCompatActivity(), FragmentCommutator {
                 changeStatusBarColor(this, (R.color.my_deep_green))
             }
         }
+    }
+
+    override fun onExit() {
+        finish()
+    }
+
+    companion object {
+        private val indexRange = 1..5
     }
 
 }

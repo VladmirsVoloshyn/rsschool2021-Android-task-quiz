@@ -34,8 +34,8 @@ class ResultFragment : Fragment() {
         answersController = arguments?.getParcelable(PARCELABLE_TITLE)
 
         binding.exitButton.setOnClickListener {
-            activity?.finish()
-            exitProcess(0)
+            val exitDialogFragment = ExitDialogFragment()
+            childFragmentManager.let { exitDialogFragment.show(it, "ResultFragment") }
         }
 
         binding.backButton.setOnClickListener {
@@ -81,7 +81,7 @@ class ResultFragment : Fragment() {
             return fragment
         }
 
-        const val CHOOSER_TITLE = "выберите клиент"
+        const val CHOOSER_TITLE = "Выберите способ отправки"
         const val QUIZ_RESULT_LABEL = "Результат квиза от rsschool"
         const val INTENT_TYPE = "message/rfc822 "
         const val PARCELABLE_TITLE = "Answer"

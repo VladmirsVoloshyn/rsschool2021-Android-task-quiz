@@ -43,6 +43,11 @@ class QuizFragment : Fragment() {
 
         binding.toolbar.title = TITLE + currentIndex.toString()
 
+        if (!isChosen) {
+            binding.nextButton.unable()
+        }
+
+
         when (currentIndex) {
             1 -> {
                 binding.previousButton.unable()
@@ -99,9 +104,6 @@ class QuizFragment : Fragment() {
             )
         }
 
-        if (!isChosen) {
-            binding.nextButton.unable()
-        }
 
         binding.optionOne.setOnClickListener {
             chooseOption(1)
@@ -138,7 +140,10 @@ class QuizFragment : Fragment() {
                     currentIndex,
                     chosenOption,
                     question.trueAnswer
-                )
+                ) else {
+                val exitDialogFragment = ExitDialogFragment()
+                childFragmentManager.let { exitDialogFragment.show(it, "хуй") }
+            }
         }
     }
 
@@ -161,14 +166,24 @@ class QuizFragment : Fragment() {
 
     private fun setPreviousOption() {
         when (prevAnswer) {
-            1 -> binding.optionOne.isChosen()
-            2 -> binding.optionTwo.isChosen()
-            3 -> binding.optionThree.isChosen()
-            4 -> binding.optionFour.isChosen()
-            5 -> binding.optionFive.isChosen()
+            1 -> {
+                binding.optionOne.isChosen();binding.nextButton.enabled()
+            }
+            2 -> {
+                binding.optionTwo.isChosen();binding.nextButton.enabled()
+            }
+            3 -> {
+                binding.optionThree.isChosen();binding.nextButton.enabled()
+            }
+            4 -> {
+                binding.optionFour.isChosen();binding.nextButton.enabled()
+            }
+            5 -> {
+                binding.optionFive.isChosen();binding.nextButton.enabled()
+            }
         }
         chosenOption = prevAnswer
-        binding.nextButton.enabled()
+
     }
 
     companion object {

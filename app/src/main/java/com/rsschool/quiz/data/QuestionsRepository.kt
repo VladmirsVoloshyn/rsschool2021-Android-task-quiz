@@ -11,7 +11,7 @@ object QuestionsRepository {
         return questions[index.minus(1)]
     }
 
-    fun init(context: Context) {
+    fun setData(context: Context) {
 
         val arrayOfQuestion = context.resources.getStringArray(R.array.questions)
 
