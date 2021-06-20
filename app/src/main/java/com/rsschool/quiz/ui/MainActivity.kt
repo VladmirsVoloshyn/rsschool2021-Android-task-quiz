@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity(), FragmentCommutator,
 
     private var currentIndex = 1
     private lateinit var binding: ActivityMainBinding
-    private var resultFragment = ResultFragment()
     private var fragmentTransaction: FragmentTransaction = supportFragmentManager.beginTransaction()
     private val answersController = AnswersController()
 
@@ -27,7 +26,9 @@ class MainActivity : AppCompatActivity(), FragmentCommutator,
         setContentView(binding.root)
 
         QuestionsRepository.setData(this)
+
         setRandomTheme()
+
         fragmentTransaction(
             QuizFragment.newInstance(answersController.getRepliesAnswer(currentIndex), currentIndex)
         )
@@ -64,8 +65,7 @@ class MainActivity : AppCompatActivity(), FragmentCommutator,
 
     override fun hasSubmit(index: Int, chosenOption: Int, trueAnswer: Int) {
         answersController.registerAnswer(chosenOption, index, trueAnswer)
-        resultFragment = ResultFragment.newInstance(answersController)
-        fragmentTransaction(resultFragment)
+        fragmentTransaction(ResultFragment.newInstance(answersController))
         setRandomTheme()
     }
 

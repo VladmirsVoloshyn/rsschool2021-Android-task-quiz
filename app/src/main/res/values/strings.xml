@@ -56,9 +56,8 @@
         <item>5</item>
         <item>3</item>
     </array>
-
-    <string name="twenty_percents_comment">"Очень плохо, старайся лучше!"</string>
-    <string name="exit_dialog_tag">Выуверены, что хотите выйти?</string>
+    
+    <string name="exit_dialog_tag">Вы уверены, что хотите выйти?</string>
     <string name="cancel" tools:ignore="ButtonCase">cancel</string>
     <string name="ok">OK</string>
 </resources>

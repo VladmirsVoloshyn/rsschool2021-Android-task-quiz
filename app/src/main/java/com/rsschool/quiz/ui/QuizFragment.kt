@@ -47,7 +47,6 @@ class QuizFragment : Fragment() {
             binding.nextButton.unable()
         }
 
-
         when (currentIndex) {
             1 -> {
                 binding.previousButton.unable()
