@@ -142,7 +142,7 @@ class QuizFragment : Fragment() {
                     question.trueAnswer
                 ) else {
                 val exitDialogFragment = ExitDialogFragment()
-                childFragmentManager.let { exitDialogFragment.show(it, "хуй") }
+                childFragmentManager.let { exitDialogFragment.show(it, CHOOSER_TITLE) }
             }
         }
     }
@@ -195,7 +195,7 @@ class QuizFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
-
+        const val CHOOSER_TITLE = "Выберите способ отправки"
         const val TEXT_BUTTON_NEXT = "Next"
         const val TEXT_BUTTON_SUBMIT = "Submit"
         const val TITLE = "Question "
