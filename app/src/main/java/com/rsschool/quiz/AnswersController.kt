@@ -3,6 +3,7 @@ package com.rsschool.quiz
 import android.os.Parcel
 import android.os.Parcelable
 import com.rsschool.quiz.data.QuestionsRepository
+import java.lang.StringBuilder
 
 class AnswersController() : Parcelable {
 
@@ -30,43 +31,41 @@ class AnswersController() : Parcelable {
         trueAnswers[index - 1] = trueAnswer
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-
-    }
-
     override fun describeContents(): Int {
         return 0
     }
 
     override fun toString(): String {
-        return "Твой результат : \n ${getResult()}%" + "\n" + when (this.getResult()) {
-            0 -> ZERO_PERCENT_COMMENT
-            20 -> TWENTY_PERCENT_COMMENT
-            40 -> FOURTEEN_PERCENT_COMMENT
-            60 -> SIXTEEN_PERCENT_COMMENT
-            80 -> EIGHTY_PERCENT_COMMENT
-            else -> HUNDRED_PERCENT_COMMENT
-        }
+        return StringBuilder().apply {
+            append(
+                "Твой результат : \n ${getResult()}%" + "\n" + when (getResult()) {
+                    0 -> ZERO_PERCENT_COMMENT
+                    20 -> TWENTY_PERCENT_COMMENT
+                    40 -> FOURTEEN_PERCENT_COMMENT
+                    60 -> SIXTEEN_PERCENT_COMMENT
+                    80 -> EIGHTY_PERCENT_COMMENT
+                    else -> HUNDRED_PERCENT_COMMENT
+                }
+            )
+        }.toString()
     }
 
-    fun generateEmailText(): String {
-
-        var resultEmailMessage = this.toString()
-
+    fun generateEmailText() = this.toString() + "\n" + StringBuilder().apply {
         for (i in 1..5) {
-            resultEmailMessage += "\n" +
-                    i + ")" + QuestionsRepository.questions[i - 1].question + "\n" +
-                    "Твой ответ: " +
-                    when (repliesAnswers[i - 1]) {
-                        1 -> QuestionsRepository.questions[i - 1].firstAnswer
-                        2 -> QuestionsRepository.questions[i - 1].secondAnswer
-                        3 -> QuestionsRepository.questions[i - 1].thirdAnswer
-                        4 -> QuestionsRepository.questions[i - 1].fourthAnswer
-                        else -> QuestionsRepository.questions[i - 1].fifthAnswer
-                    } + "\n"
+            append(
+                "\n" +
+                        i + ")" + QuestionsRepository.questions[i - 1].question + "\n" +
+                        "Твой ответ: " +
+                        when (repliesAnswers[i - 1]) {
+                            1 -> QuestionsRepository.questions[i - 1].firstAnswer
+                            2 -> QuestionsRepository.questions[i - 1].secondAnswer
+                            3 -> QuestionsRepository.questions[i - 1].thirdAnswer
+                            4 -> QuestionsRepository.questions[i - 1].fourthAnswer
+                            else -> QuestionsRepository.questions[i - 1].fifthAnswer
+                        } + "\n"
+            )
         }
-        return resultEmailMessage
-    }
+    }.toString()
 
     companion object CREATOR : Parcelable.Creator<AnswersController> {
         override fun createFromParcel(parcel: Parcel): AnswersController {
@@ -87,5 +86,9 @@ class AnswersController() : Parcelable {
     }
 
     constructor(parcel: Parcel) : this()
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
 
 }
