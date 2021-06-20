@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.AnswersController
 import com.rsschool.quiz.databinding.FragmentResultBinding
@@ -38,9 +39,7 @@ class ResultFragment : Fragment() {
         }
 
         binding.backButton.setOnClickListener {
-            activity?.finish()
-            val intent = Intent(context, MainActivity::class.java )
-            startActivity(intent)
+            restartQuiz()
 
         }
 
@@ -48,6 +47,14 @@ class ResultFragment : Fragment() {
 
         binding.shareButton.setOnClickListener {
             sendMail()
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(callback)
+    }
+
+    private val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+           restartQuiz()
         }
     }
 
@@ -63,6 +70,12 @@ class ResultFragment : Fragment() {
         super.onAttach(context)
         fragmentCommutator = activity as FragmentCommutator
 
+    }
+
+    private fun restartQuiz(){
+        activity?.finish()
+        val intent = Intent(context, MainActivity::class.java )
+        startActivity(intent)
     }
 
     override fun onDestroyView() {
