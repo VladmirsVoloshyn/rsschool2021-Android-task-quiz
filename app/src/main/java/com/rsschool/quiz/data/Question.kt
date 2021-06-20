@@ -1,7 +1,7 @@
 package com.rsschool.quiz.data
 
 data class Question(
-    val question: String, val firstAnswer: String = "option one", val secondAnswer: String = "option two",
-    val thirdAnswer: String = "option three", val fourthAnswer: String = "option four", val fifthAnswer: String= "option five", val trueAnswer: Int = 0
+    val question: String, val firstAnswer: String , val secondAnswer: String ,
+    val thirdAnswer: String , val fourthAnswer: String , val fifthAnswer: String, val trueAnswer: Int = 0
 ) {
 }

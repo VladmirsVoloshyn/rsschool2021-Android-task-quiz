@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.rsschool.quiz.AnswersController
 import com.rsschool.quiz.databinding.FragmentResultBinding
-import kotlin.system.exitProcess
 
 class ResultFragment : Fragment() {
 
@@ -39,9 +38,10 @@ class ResultFragment : Fragment() {
         }
 
         binding.backButton.setOnClickListener {
+            activity?.finish()
             val intent = Intent(context, MainActivity::class.java )
             startActivity(intent)
-            activity?.finish()
+
         }
 
         binding.resultLabelTextView.text = answersController.toString()
