@@ -127,12 +127,12 @@ class QuizFragment : Fragment() {
         binding.optionFour.text = question.fourthAnswer
         binding.optionFive.text = question.fifthAnswer
 
-        requireActivity().onBackPressedDispatcher.addCallback(callback)
+        requireActivity().onBackPressedDispatcher.addCallback(backPressedCallback)
 
         setPreviousOption()
     }
 
-    private val callback = object : OnBackPressedCallback(true) {
+    private val backPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             if (currentIndex != 1)
                 fragmentCommutator?.hasPrevious(

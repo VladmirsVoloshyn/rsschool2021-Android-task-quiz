@@ -54,8 +54,6 @@ class ExitDialogFragment : DialogFragment() {
     }
 
     interface ExitDialogListener {
-
         fun onExit()
-
     }
 }
